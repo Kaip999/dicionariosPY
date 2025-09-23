@@ -18,11 +18,13 @@ def AchaIndice(lista, elemento):
     for i in range(len(lista)):
         if lista[i] == elemento:
             return i
+
+INDICES = CriaIndices(dic["nome"])
+
 #----------------------------------------pergunta-----------------------------------------
 print(dic["nome"])
 resp = input("sobre qual personagem você deseja saber mais?")
 resp = resp.upper()
-
 
 #-----------------------------------------print/resposta--------------------------------------------
 for i in dic:
@@ -31,6 +33,7 @@ for i in dic:
     # dic [i = chaves] [dentro da lista indice ve o nome e volta o valor]
     # exemplo: dic [armas] [2]
 
+#--------------------------------------------acha o maior valor de ergo ------------------------
 def MaiorErgo(lista):
     maior = 0
     for i in range(len(lista)):
@@ -38,8 +41,3 @@ def MaiorErgo(lista):
             maior = lista[i]
 
     return maior
-
-def AchaIndice(lista, elemento):
-    for i in range(len(lista)):
-        if lista[i] == elemento:
-            return i
