@@ -1,3 +1,5 @@
+import requests
+
 games = {"NOME"     : ["GOD OF WAR"     ,"ZELDA"           ,"FORZA"  ],
        "PREÇO"      : [199.00           ,230.00            ,150.00   ],
        "PLATAFORMA" : ["playstation"    ,"nintendo"        ,"xbox"   ],
@@ -91,10 +93,21 @@ def buy():
        else:
               return
 
+def logcep():
+       while True:
+              cep = intVerify("digite seu cep: ")
+              endereco = requests.get(f"https://viacep.com.br/ws/{cep}/json/")
+              if endereco.status_code == 200:
+                     carrinho["endereço"] = endereco.json()
+                     carrinho["endereço"]["N"] = intVerify("numero da residencia: ")
+                     endereco["endereço"]["complemeto"] = input("complemento ")
+                     return
+              print("endereço invaido")
+              print(endereco.status_code)
+
 carrinho = {"endereço"   : {},
             "itens"      : {},
             "valor total": 0  }
-
 CriaIndices()
-buy()
+logcep()
 print(carrinho)
