@@ -2,7 +2,8 @@ games = {"NOME"     : ["GOD OF WAR"     ,"ZELDA"           ,"FORZA"  ],
        "PREÇO"      : [199.00           ,230.00            ,150.00   ],
        "PLATAFORMA" : ["playstation"    ,"nintendo"        ,"xbox"   ],
        "GENERO"     : ["ação e aventura","ação e aventura" ,"corrida"],
-       "GOT"        : [ True            ,True              ,False    ]}
+       "GOT"        : [ True            ,True              ,False    ],
+       "ESTOQUE"    : [ 20              ,17                ,12       ]}
 
 def choose(msg, lista):
        opc = " | ".join(lista)
@@ -17,6 +18,7 @@ def choose(msg, lista):
 def CriaIndices():
     global INDICES
     INDICES = {games['NOME'][i] : i for i in range(len(games['NOME']))}
+    return INDICES
 
 def remove():
        item = choose("qual jogo você deseja remover?", games["NOME"])
@@ -54,5 +56,48 @@ def atualizar():
                             value = input(f"diga o novo {key}: ")
                             games[key][indice] = value
 
+def intVerify(msg):
+       num = input(msg)
+       while not num.isnumeric():
+              print("invalido")
+              num = input(msg)
+
+       return int(num)
+
+def buy():
+       jogo = choose("qual jogo você deseja comprar?", games["NOME"])
+       indice = INDICES[jogo]
+
+       for key in games.keys():
+              print(f"{key} : {games[key][indice]}")
+       continuar = choose(f"Você vai levar o {jogo}?", ["SIM","NÃO"])
+       if continuar == 'SIM':
+              qtd = intVerify(f"Quantas unidades deseja?")
+              games['ESTOQUE'][indice] -= qtd
+              if qtd <= games['ESTOQUE'][indice]:
+                     valor = games['PREÇO'][indice]*qtd
+                     carrinho['valor total'] += valor
+                     if jogo in carrinho['itens'].keys():
+                            carrinho['itens'][jogo] += qtd
+                     else:
+                            carrinho['itens'][jogo] = qtd
+              else:
+                     print(f"estamos sem estoque desse jogo")
+                     return buy()
+       else:
+              conti = choose("deseja ver outros itens?", ["SIM","NÃO"])
+              if continuar == "SIM":
+                  return buy()
+              return
+
+
+
+
+
+carrinho = {"endereço"   : {},
+            "itens"      : {},
+            "valor total": 0  }
+
 CriaIndices()
-atualizar()
+buy()
+print(carrinho)
