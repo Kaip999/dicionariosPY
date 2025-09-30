@@ -70,8 +70,8 @@ def buy():
 
        for key in games.keys():
               print(f"{key} : {games[key][indice]}")
-       continuar = choose(f"Você vai levar o {jogo}?", ["SIM","NÃO"])
-       if continuar == 'SIM':
+       confirmar = choose(f"Você vai levar o {jogo}?", ["SIM","NÃO"])
+       if confirmar == 'SIM':
               qtd = intVerify(f"Quantas unidades deseja?")
               games['ESTOQUE'][indice] -= qtd
               if qtd <= games['ESTOQUE'][indice]:
@@ -84,15 +84,12 @@ def buy():
               else:
                      print(f"estamos sem estoque desse jogo")
                      return buy()
+
+       continuar = choose("deseja ver outros itens?", ["SIM","NÃO"])
+       if continuar == "SIM":
+              return buy()
        else:
-              conti = choose("deseja ver outros itens?", ["SIM","NÃO"])
-              if continuar == "SIM":
-                  return buy()
               return
-
-
-
-
 
 carrinho = {"endereço"   : {},
             "itens"      : {},
